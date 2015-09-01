@@ -4,9 +4,7 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
     ViewBag.Title = "Register";
 }
-<div> NEW USER </div>
-
-@using (Html.BeginForm("RegisterNewUser", "Register", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm("RegisterNewUser", "Login", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
 {
     @Html.AntiForgeryToken()
     <h3>Register a new account.</h3>

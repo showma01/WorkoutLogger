@@ -32,4 +32,18 @@ namespace WorkoutLogger.Models
             return await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
         }
     }
+
+    public class DbContext : IdentityDbContext<User>
+    {
+        public DbContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
+        {
+            
+        }
+
+        public static DbContext Create()
+        {
+            return new DbContext();
+        }
+    }
 }

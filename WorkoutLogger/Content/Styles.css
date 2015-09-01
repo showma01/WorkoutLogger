@@ -2,14 +2,15 @@
 }
 
 #header-jumbotron{
-    background-color: #6f5499;
+    background-color: #000080;
 }
 #navbar {
+    background-color: #d3d3d3;
     margin-left: 50px;
 }
 
 #header-jumbotron h2{
     margin-left: 40px;
-    color: #fff;
+    color: #d2691e;
     margin-top: 50px;
 }

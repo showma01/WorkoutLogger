@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Web;
 using Microsoft.Owin;
 using Owin;
+using WorkoutLogger.Models;
 
 [assembly: OwinStartupAttribute(typeof(WorkoutLogger.Statup))]
 namespace WorkoutLogger
@@ -13,7 +14,14 @@ namespace WorkoutLogger
     {
         public void Configuration(IAppBuilder app)
         {
-            
+            ExecuteConfigure(app);
+        }
+
+        public void ExecuteConfigure(IAppBuilder app)
+        {
+            app.CreatePerOwinContext(DbContext.Create);
+            app.CreatePerOwinContext<UserManager>(UserManager.Create);
+            app.CreatePerOwinContext<UserSignInManager>(UserSignInManager.Create);
         }
     }
 }

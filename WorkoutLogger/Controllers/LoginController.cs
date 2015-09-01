@@ -52,7 +52,7 @@ namespace WorkoutLogger.Controllers
                     case SignInStatus.Success:
                         if (Url.IsLocalUrl(url))
                             return Redirect(url);
-                        return RedirectToAction("Active", "ActiveUser");
+                        return RedirectToAction("RecentWorkouts", "ActiveUser");
                         break;
                     default:
                         ModelState.AddModelError(string.Empty, "Invalid login.");
@@ -84,7 +84,15 @@ namespace WorkoutLogger.Controllers
                 if (createResult.Succeeded)
                 {
                     await SignInManager.SignInAsync(newUser, false, false);
-                    return RedirectToAction("Active", "ActiveUser");
+                    return RedirectToAction("RecentWorkouts", "ActiveUser");
+                }
+
+                if (createResult.Errors.Any())
+                {
+                    foreach (var error in createResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
                 }
             }
             return View(model);

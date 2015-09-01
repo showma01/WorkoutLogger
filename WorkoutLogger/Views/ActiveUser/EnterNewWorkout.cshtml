@@ -1,8 +1,45 @@
 ﻿@using WorkoutLogger.Models
+@using WorkoutLogger.Utilities
 @model ActiveUserViewModel
 @{
     Layout = "~/Views/Shared/_ActiveUserLayout.cshtml";
     ViewBag.Title = "New Workout";
 }
 
-<h2>ENTER NEW WORKOUT</h2>
+@using (Html.BeginForm("EnterNewWorkout", "ActiveUser", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h3>Enter a new workout.</h3>
+    <hr />
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.WorkoutType, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.WorkoutType, new SelectList(WorkoutHelper.WorkoutTypeCollection), new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.StartTime, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.StartTime, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Length, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Length, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Intensity, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.Intensity, new SelectList(WorkoutHelper.WorkoutIntensityCollection), new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}

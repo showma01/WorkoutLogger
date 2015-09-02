@@ -1,8 +1,8 @@
 ﻿@using WorkoutLogger.Models
 @using WorkoutLogger.Utilities
-@model ActiveUserViewModel
+@model NewWorkoutViewModel
 @{
-    Layout = "~/Views/Shared/_ActiveUserLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "New Workout";
 }
 
@@ -17,12 +17,6 @@
         @Html.LabelFor(m => m.WorkoutType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownListFor(m => m.WorkoutType, new SelectList(WorkoutHelper.WorkoutTypeCollection), new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.StartTime, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(m => m.StartTime, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

@@ -90,3 +90,6 @@ C:\Users\Mason\Desktop\WorkoutLogger\WorkoutLogger\bin\System.Web.Mvc.xml
 C:\Users\Mason\Desktop\WorkoutLogger\WorkoutLogger\obj\Debug\WorkoutLogger.csprojResolveAssemblyReference.cache
 C:\Users\Mason\Desktop\WorkoutLogger\WorkoutLogger\obj\Debug\WorkoutLogger.dll
 C:\Users\Mason\Desktop\WorkoutLogger\WorkoutLogger\obj\Debug\WorkoutLogger.pdb
+C:\Users\Mason\Desktop\WorkoutLogger\WorkoutLogger\obj\Debug\WorkoutLogger.Migrations.InitialCreate.resources
+C:\Users\Mason\Desktop\WorkoutLogger\WorkoutLogger\obj\Debug\WorkoutLogger.csproj.GenerateResource.Cache
+C:\Users\Mason\Desktop\WorkoutLogger\WorkoutLogger\obj\Debug\WorkoutLogger.Migrations.AddWorkoutId.resources

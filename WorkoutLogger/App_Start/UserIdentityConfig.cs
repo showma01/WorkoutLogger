@@ -36,7 +36,7 @@ namespace WorkoutLogger
 
         public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)
         {
-            var userManager = new UserManager(new UserStore<User>(context.Get<DbContext>()));
+            var userManager = new UserManager(new UserStore<User>(context.Get<UserDbContext>()));
 
             userManager.UserValidator = new UserValidator<User>(userManager)
             {
@@ -60,4 +60,5 @@ namespace WorkoutLogger
             return userManager;
         }
     }
+
 }

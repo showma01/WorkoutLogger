@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using WorkoutLogger.Models;
 
 namespace WorkoutLogger.Controllers
@@ -28,13 +32,38 @@ namespace WorkoutLogger.Controllers
             get { return _userManager ?? HttpContext.GetOwinContext().Get<UserManager>(); }
             set { _userManager = value; }
         }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+        #endregion
+
+        #region Constructor
+
+        public LoginController()
+        {
+            
+        }
+
+        public LoginController(UserManager userManager, UserSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
         #endregion
 
         #region Login Methods
         [AllowAnonymous]
-        public ActionResult Login(string url)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = url;
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("RecentWorkouts", "ActiveUser");
+            }
             return View();
         }
 
@@ -69,6 +98,10 @@ namespace WorkoutLogger.Controllers
         [AllowAnonymous]
         public ActionResult RegisterNewUser()
         {
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("RecentWorkouts", "ActiveUser");
+            }
             return View();
         }
 
@@ -98,5 +131,34 @@ namespace WorkoutLogger.Controllers
             return View(model);
         }
         #endregion
+
+        #region Log off Methods
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Login", "Login");
+        }
+        #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+
+                if (_signInManager != null)
+                {
+                    _signInManager.Dispose();
+                    _signInManager = null;
+                }
+            }
+            base.Dispose(disposing);
+        }
     }
 }

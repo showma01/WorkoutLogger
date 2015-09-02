@@ -13,6 +13,7 @@ namespace WorkoutLogger.Models
     public class LoginViewModel
     {
         #region Properties
+
         [Required]
         [Display(Name = "UserName")]
         [EmailAddress]
@@ -25,6 +26,20 @@ namespace WorkoutLogger.Models
         #endregion
     }
 
+    public class RegisterUserViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+    }
+
     public class User : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
@@ -33,17 +48,17 @@ namespace WorkoutLogger.Models
         }
     }
 
-    public class DbContext : IdentityDbContext<User>
+    public class UserDbContext : IdentityDbContext<User>
     {
-        public DbContext()
+        public UserDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
             
         }
 
-        public static DbContext Create()
+        public static UserDbContext Create()
         {
-            return new DbContext();
+            return new UserDbContext();
         }
     }
 }

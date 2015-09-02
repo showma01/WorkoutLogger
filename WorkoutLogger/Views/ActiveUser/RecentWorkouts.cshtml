@@ -1,8 +1,27 @@
 ﻿@using WorkoutLogger.Models
-@model ActiveUserViewModel
+@model RecentWorkoutsViewModel
 @{
-    Layout = "~/Views/Shared/_ActiveUserLayout.cshtml";
-    ViewBag.Title = "New Workout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Recent Workouts";
 }
 
-<h2>RECENT WORKOUTS</h2>
+<h3>Recent Workouts</h3>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-striped ">
+        <tr>
+            <th>Type</th>
+            <th>Intensity</th>
+            <th>Length(min)</th>
+        </tr>
+        @foreach (var workout in Model.RecentWorkoutList)
+        {
+            <tr>
+                <td>@workout.WorkoutType</td>
+                <td>@workout.Intensity</td>
+                <td>@workout.Length</td>
+            </tr>
+        }
+    </table>
+</div>

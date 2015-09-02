@@ -14,10 +14,16 @@ namespace WorkoutLogger
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
+                name: "ActiveUserController",
+                url: "ActiveUser/{action}/{page}",
+                defaults: new {controller = "ActiveUser", action = "RecentWorkouts",page = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+    name: "Default",
+    url: "{controller}/{action}/{id}",
+    defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
+);
         }
     }
 }

@@ -35,15 +35,16 @@ namespace WorkoutLogger.Controllers
         #endregion
 
         #region Recent Workouts
-        [AllowAnonymous]
+        [Authorize]
         // GET: RecentWorkouts
-        public ActionResult RecentWorkouts()
+        public ActionResult RecentWorkouts(int page = 0)
         {
             var model = new RecentWorkoutsViewModel();
             if (ModelState.IsValid)
             {
+                model.TotalWorkoutsCount = WorkoutDB.Workouts.Count();
                 var userId = User.Identity.Name;
-                var results = WorkoutDB.Workouts.SqlQuery("SELECT * FROM UserWorkouts WHERE UserEmail='" + userId + "'").ToList();
+                var results = WorkoutDB.Workouts.Where(x => x.UserEmail == userId).OrderBy(y => y.Id).Skip(page*5).Take(5);
                 if (results.Any())
                 {
                     foreach (var workout in results)

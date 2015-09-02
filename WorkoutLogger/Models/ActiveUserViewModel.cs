@@ -14,6 +14,8 @@ namespace WorkoutLogger.Models
     {
         public List<NewWorkoutViewModel> RecentWorkoutList { get; set; }
 
+        public int TotalWorkoutsCount { get; set; }
+
         public RecentWorkoutsViewModel()
         {
             RecentWorkoutList = new List<NewWorkoutViewModel>();

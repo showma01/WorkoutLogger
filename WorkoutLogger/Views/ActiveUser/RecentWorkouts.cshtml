@@ -26,20 +26,10 @@
     </table>
     <nav>
         <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
             @for (var i = 0; i < Model.TotalWorkoutsCount/5; i++)
             {
                 <li><a href="/ActiveUser/RecentWorkouts/@i">@i</a></li>
             }
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
         </ul>
     </nav>
 </div>

@@ -16,14 +16,14 @@ namespace WorkoutLogger
             routes.MapRoute(
                 name: "ActiveUserController",
                 url: "ActiveUser/{action}/{page}",
-                defaults: new {controller = "ActiveUser", action = "RecentWorkouts",page = UrlParameter.Optional }
-            );
+                defaults: new {controller = "ActiveUser", action = "RecentWorkouts", page = UrlParameter.Optional}
+                );
 
             routes.MapRoute(
-    name: "Default",
-    url: "{controller}/{action}/{id}",
-    defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
-);
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new {controller = "Login", action = "Login", id = UrlParameter.Optional}
+                );
         }
     }
 }

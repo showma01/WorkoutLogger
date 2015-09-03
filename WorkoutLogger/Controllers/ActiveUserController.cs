@@ -39,21 +39,32 @@ namespace WorkoutLogger.Controllers
         // GET: RecentWorkouts
         public ActionResult RecentWorkouts(int page = 0)
         {
-            var model = new RecentWorkoutsViewModel();
-            if (ModelState.IsValid)
+            if (Request.IsAuthenticated)
             {
-                model.TotalWorkoutsCount = WorkoutDB.Workouts.Count();
-                var userId = User.Identity.Name;
-                var results = WorkoutDB.Workouts.Where(x => x.UserEmail == userId).OrderBy(y => y.Id).Skip(page*5).Take(5);
-                if (results.Any())
+                var model = new RecentWorkoutsViewModel();
+                if (ModelState.IsValid)
                 {
-                    foreach (var workout in results)
+                    var userId = User.Identity.Name;
+                    model.TotalWorkoutsCount = WorkoutDB.Workouts.Count(x => x.UserEmail == userId);
+
+                    if (model.TotalWorkoutsCount/5 < page)
+                        page = model.TotalWorkoutsCount;
+                    else if (page < 0)
+                        page = 0;
+
+                    var results =
+                        WorkoutDB.Workouts.Where(x => x.UserEmail == userId).OrderBy(y => y.Id).Skip(page*5).Take(5);
+                    if (results.Any())
                     {
-                        model.RecentWorkoutList.Add(workout);
+                        foreach (var workout in results)
+                        {
+                            model.RecentWorkoutList.Add(workout);
+                        }
                     }
                 }
+                return View(model);
             }
-            return View(model);
+            return RedirectToAction("Login", "Login");
         }
 
         #endregion
@@ -63,7 +74,9 @@ namespace WorkoutLogger.Controllers
         [AllowAnonymous]
         public ActionResult EnterNewWorkout()
         {
-            return View();
+            if(Request.IsAuthenticated)
+                return View();
+            return RedirectToAction("Login", "Login");
         }
 
         [HttpPost]
@@ -71,18 +84,22 @@ namespace WorkoutLogger.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnterNewWorkout(NewWorkoutViewModel model, string returnUrl)
         {
-            if (model != null)
+            if (Request.IsAuthenticated)
             {
-                model.UserEmail = User.Identity.Name;
-                WorkoutDB.Workouts.Add(model);
-                if (ModelState.IsValid)
+                if (model != null)
                 {
-                    await WorkoutDB.SaveChangesAsync();
-                    ModelState.AddModelError(string.Empty, "New workout created!");
-                    return View();
+                    model.UserEmail = User.Identity.Name;
+                    WorkoutDB.Workouts.Add(model);
+                    if (ModelState.IsValid)
+                    {
+                        await WorkoutDB.SaveChangesAsync();
+                        ModelState.AddModelError(string.Empty, "New workout created!");
+                        return View();
+                    }
                 }
+                return View(model);
             }
-            return View(model);
+            return RedirectToAction("Login", "Login");
         }
 
         #endregion
